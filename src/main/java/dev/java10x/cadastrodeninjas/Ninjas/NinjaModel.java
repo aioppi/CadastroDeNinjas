@@ -3,10 +3,15 @@ package dev.java10x.cadastrodeninjas.Ninjas;
 import dev.java10x.cadastrodeninjas.Missoes.MissoesModel;
 import jakarta.persistence.*;
 
+
+import lombok.Data;
+//O que é Lombok?
+//É uma biblioteca que gera código "chato" automaticamente em tempo de compilação. Você só coloca anotações e ele cria os métodos por baixo dos panos.
+
 import java.util.List;
 
 @Entity
-// Entity - Ele transforma a classe em uma entidade do banco de dados, permitindo que seja mapeada para uma tabela e persistida.
+// Entity - Ele transforma a classe em uma entidade do banco de dados, ou seja, uma TABELA... (permitindo que seja mapeada para uma tabela e persistida).
 // Entity é uma anotação usada para marcar uma classe como uma entidade do banco de dados, indicando que ela deve ser mapeada para
 // uma tabela e persistida. Ela é parte da especificação JPA (Java Persistence API) e é usada para definir classes que representam
 // tabelas em um banco de dados relacional.
@@ -14,10 +19,15 @@ import java.util.List;
 // representa uma linha nessa tabela.
 
 @Table(name  = "tb_cadastro")
+// Table - Especifica o nome da tabela no banco de dados que será usada para armazenar os dados da entidade. No caso, a tabela será chamada "tb_cadastro".
 
 // JPA - Java Persistence API, é uma especificação que define um conjunto de regras e padrões para o mapeamento de objetos
 // Java para bancos de dados relacionais. Ele fornece uma maneira de gerenciar a persistência de dados em aplicações Java,
 // permitindo que os desenvolvedores trabalhem com objetos Java em vez de lidar diretamente com consultas SQL.
+
+@Data
+// @Data - É uma anotação do Lombok que gera automaticamente os métodos getters, setters, equals, hashCode e toString
+// para os campos da classe. Isso reduz a quantidade de código boilerplate necessário para criar esses métodos manualmente.
 
 public class NinjaModel {
 
@@ -26,8 +36,16 @@ public class NinjaModel {
     @GeneratedValue (strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     private String nome;
+
+    @Column(unique = true) // Especifica que a coluna "email" deve ser única no banco de dados, ou seja, não pode haver dois ninjas com o mesmo email.
     private String email;
+    // Column - Especifica detalhes adicionais sobre a coluna no banco de dados. No caso, a anotação @Column(unique = true) indica que
+    // a coluna "email" deve ser única, ou seja, não pode haver dois ninjas com o mesmo email.
+    // No mundo real, isso seria utilizado para proteger um cpf, ou seja, não pode haver dois ninjas com o mesmo cpf, ou seja, com o mesmo email.
+
+
     private int idade;
+
 
     //@manytoone - Indica que há uma relação de muitos para um entre a entidade atual e outra entidade. Isso significa
     // que muitos objetos da entidade atual podem estar associados a um único objeto da outra entidade.
@@ -36,10 +54,11 @@ public class NinjaModel {
     // as entidades. No caso, a coluna "missoes_id" na tabela do banco de dados será usada para associar os ninjas às missões. - Chave estrangeira
     private List<MissoesModel> missoes;
 
-
+    //NoArgs constructor - É um construtor que não recebe nenhum argumento. Ele é necessário para que o JPA possa criar instâncias da entidade
     public NinjaModel() {
     }
 
+    // Quase um allArgs, mas sem o id, pois o id é gerado automaticamente pelo banco de dados, então não precisamos incluí-lo no construtor.
     public NinjaModel(String nome, String email, int idade) {
         this.nome = nome;
         this.email = email;
