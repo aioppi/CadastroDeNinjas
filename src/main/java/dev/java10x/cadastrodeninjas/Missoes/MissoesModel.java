@@ -3,30 +3,38 @@ package dev.java10x.cadastrodeninjas.Missoes;
 import dev.java10x.cadastrodeninjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 
-import java.util.Collections;
-import java.util.List;
-
 @Entity
-@Table (name = "tb_missoes")
-
+@Table(name = "tb_missoes")
 public class MissoesModel {
 
     @Id
-    @GeneratedValue (strategy = jakarta.persistence.GenerationType.IDENTITY)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nomeMissoes;
 
     private String dificuldadeMissoes;
 
-    @OneToMany (mappedBy = "missoes")
+    // ========== RELACIONAMENTO ==========
 
-    // Uma missao pode ter muitos ninjas, ou seja, um ninja pode estar associado a várias missões, mas cada missão pode ter apenas um ninja associado a ela.
-    private List<NinjaModel> ninja;
+    @ManyToOne
+    @JoinColumn(name = "ninja_id")
+    private NinjaModel ninja;
+    // @ManyToOne - Muitas missões podem pertencer a um único ninja
+    // @JoinColumn(name = "ninja_id") - Cria a coluna "ninja_id" na tabela tb_missoes (chave estrangeira)
+    // Esta é a coluna que vai guardar o ID do ninja responsável por esta missão
+
+    // ========== CONSTRUTORES ==========
 
     public MissoesModel() {
     }
+
+    public MissoesModel(String nomeMissoes, String dificuldadeMissoes) {
+        this.nomeMissoes = nomeMissoes;
+        this.dificuldadeMissoes = dificuldadeMissoes;
+    }
+
+    // ========== GETTERS E SETTERS ==========
 
     public Long getId() {
         return id;
@@ -53,10 +61,10 @@ public class MissoesModel {
     }
 
     public NinjaModel getNinja() {
-        return (NinjaModel) ninja;
+        return ninja;
     }
 
     public void setNinja(NinjaModel ninja) {
-        this.ninja = Collections.singletonList(ninja);
+        this.ninja = ninja;
     }
 }
