@@ -1,6 +1,5 @@
 package dev.java10x.cadastrodeninjas.Ninjas;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -8,8 +7,12 @@ import java.util.List;
 @RequestMapping("/ninjas")  // Define o caminho base: /ninjas
 public class NinjaController {
 
-    @Autowired
+
     private NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     // GET /ninjas/boasvindas
     @GetMapping("/boasvindas")
@@ -25,8 +28,9 @@ public class NinjaController {
 
     // Mostrar todos os ninjas (READ)
     @GetMapping("/listar")
-    public String mostrarTodosOsNinjas() {
-        return "Mostrar Ninjas!";
+    public List<NinjaModel> mostrarTodosOsNinjas() {
+        return ninjaService.listarNinjas();
+
     }
 
     // Mostrar ninja por ID (READ)

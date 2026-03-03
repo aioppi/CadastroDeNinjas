@@ -1,15 +1,36 @@
 package dev.java10x.cadastrodeninjas.Ninjas;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+
 public class NinjaService {
 
-    @Autowired
+
+
     private NinjaRepository ninjaRepository;
 
+    public NinjaService (NinjaRepository ninjaRepository) {
+        this.ninjaRepository = ninjaRepository;
+    }
+
+    // Listar todos os ninjas
+    public List<NinjaModel> listarNinjas() {
+        return ninjaRepository.findAll();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+/*
     // Listar todos os ninjas
     public List<NinjaModel> listarTodos() {
         return ninjaRepository.findAll();
@@ -42,4 +63,4 @@ public class NinjaService {
     public void deletar(Long id) {
         ninjaRepository.deleteById(id);
     }
-}
+}*/
