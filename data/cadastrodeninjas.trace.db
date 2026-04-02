@@ -1,3 +1,9 @@
 2026-02-25 23:07:22.776168Z jdbc[24]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_CADASTROTB_CADASTRO" not found; SQL statement:
 SELECT*FROM TB_CADASTROTB_CADASTRO [42102-224]
+2026-04-02 17:07:46.672188+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-04-02 17:17:31.102823+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-04-02 17:19:35.459979+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
