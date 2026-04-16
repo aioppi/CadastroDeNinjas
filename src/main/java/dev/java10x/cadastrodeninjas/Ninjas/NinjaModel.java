@@ -26,9 +26,12 @@ public class NinjaModel {
     @Column(name = "img_URL")
     private String imgURL;
 
+    @Column (name = "rank")
+    private String rank;
+
     // ========== RELACIONAMENTO ==========
 
-    @OneToMany(mappedBy = "ninja")  // ← UM ninja para MUITAS missões
+    @OneToMany
     @JsonIgnore  // ← Evita loop infinito no JSON
     private List<MissoesModel> missoes;
     // mappedBy = "ninja" significa: "O atributo 'ninja' em MissoesModel é quem controla este relacionamento"

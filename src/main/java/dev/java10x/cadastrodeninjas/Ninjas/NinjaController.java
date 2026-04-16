@@ -4,11 +4,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ninjas")  // Define o caminho base: /ninjas
+@RequestMapping("/ninjas")
 public class NinjaController {
 
-
-    private NinjaService ninjaService;
+    private final NinjaService ninjaService;
 
     public NinjaController(NinjaService ninjaService) {
         this.ninjaService = ninjaService;
@@ -20,33 +19,31 @@ public class NinjaController {
         return "Essa é minha primeira mensagem nessa rota!";
     }
 
-    // Adiciona Ninja (CREATE)
+    // POST /ninjas/criar
     @PostMapping("/criar")
-    public NinjaModel criarNinja (@RequestBody NinjaModel ninjaModel) {
-     return  ninjaService.criarNinja(ninjaModel) ;
-
+    public NinjaDTO criarNinja(@RequestBody NinjaDTO ninjaDTO) {
+        return ninjaService.criarNinja(ninjaDTO);
     }
 
-    // Mostrar todos os ninjas (READ)
+    // GET /ninjas/listar
     @GetMapping("/listar")
     public List<NinjaModel> mostrarTodosOsNinjas() {
         return ninjaService.listarNinjas();
-
     }
 
-    // Mostrar ninja por ID (READ)
+    // GET /ninjas/listar/{id}
     @GetMapping("/listar/{id}")
     public NinjaModel mostrarNinjaPorID(@PathVariable long id) {
         return ninjaService.listarNinjaPorID(id);
     }
 
-    // Alterar dados do ninja (UPDATE)
+    // PUT /ninjas/alterar/{id}
     @PutMapping("/alterar/{id}")
     public NinjaModel alterarNinja(@PathVariable Long id, @RequestBody NinjaModel ninjaModel) {
         return ninjaService.atualizarNinja(id, ninjaModel);
     }
 
-    // Deletar ninja (DELETE)
+    // DELETE /ninjas/deletar/{id}
     @DeleteMapping("/deletar/{id}")
     public String deletarNinja(@PathVariable Long id) {
         ninjaService.deletarNinja(id);

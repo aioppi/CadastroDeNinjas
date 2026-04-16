@@ -1,19 +1,18 @@
 package dev.java10x.cadastrodeninjas.Ninjas;
+
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
-
 @Service
-
 public class NinjaService {
 
+    private final NinjaRepository ninjaRepository;
+    private final NinjaMapper ninjaMapper;
 
-    private NinjaRepository ninjaRepository;
-
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
     // Listar todos os ninjas
@@ -21,17 +20,17 @@ public class NinjaService {
         return ninjaRepository.findAll();
     }
 
-    // Listar todos os ninjas por ID
-
+    // Listar ninja por ID
     public NinjaModel listarNinjaPorID(Long id) {
         Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
         return ninjaModel.orElse(null);
     }
+
     // Criar novo ninja
-
-    public NinjaModel criarNinja(NinjaModel ninja) {
-        return ninjaRepository.save(ninja);
-
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninjaModel = ninjaMapper.map(ninjaDTO);
+        NinjaModel salvo = ninjaRepository.save(ninjaModel);
+        return ninjaMapper.map(salvo);
     }
 
     // Atualizar ninja
@@ -42,6 +41,7 @@ public class NinjaService {
             ninja.setIdade(ninjaAtualizado.getIdade());
             ninja.setEmail(ninjaAtualizado.getEmail());
             ninja.setImgURL(ninjaAtualizado.getImgURL());
+            ninja.setRank(ninjaAtualizado.getRank());
             return ninjaRepository.save(ninja);
         }
         return null;
@@ -52,7 +52,6 @@ public class NinjaService {
         ninjaRepository.deleteById(id);
     }
 }
-
 /*
     // Listar todos os ninjas
     public List<NinjaModel> listarTodos() {
