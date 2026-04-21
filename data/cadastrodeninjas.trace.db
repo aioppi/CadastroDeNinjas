@@ -33,3 +33,15 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
 2026-04-07 02:09:48.345795+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-04-21 21:59:55.751788+01:00 jdbc[55]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-04-21 22:00:08.614300+01:00 jdbc[54]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]EMAIL"; expected "EXPLAIN, EXECUTE"; SQL statement:
+EMAIL [42001-224]
+2026-04-21 22:31:09.276871+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM TB_MISSOES TB_CADASTRO_MISSOES [*]TB_CADASTRO"; SQL statement:
+SELECT * FROM TB_MISSOES TB_CADASTRO_MISSOES TB_CADASTRO [42000-224]
+2026-04-21 22:32:38.563107+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2026-04-21 22:44:37.683388+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
