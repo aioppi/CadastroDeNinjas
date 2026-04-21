@@ -3,6 +3,7 @@ package dev.java10x.cadastrodeninjas.Ninjas;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
@@ -16,14 +17,19 @@ public class NinjaService {
     }
 
     // Listar todos os ninjas
-    public List<NinjaModel> listarNinjas() {
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> listarNinjas() {
+        List<NinjaModel> ninjas = ninjaRepository.findAll();
+        return ninjas.stream()
+                .map(ninjaMapper::map)
+                .collect(Collectors.toList());
     }
 
+
     // Listar ninja por ID
-    public NinjaModel listarNinjaPorID(Long id) {
-        Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
-        return ninjaModel.orElse(null);
+    public NinjaDTO listarNinjaPorID(Long id) {
+        Optional<NinjaDTO> ninjaDTO = ninjaRepository.findById(id)
+                .map(ninjaMapper::map);
+        return ninjaDTO.orElse(null);
     }
 
     // Criar novo ninja
@@ -34,16 +40,14 @@ public class NinjaService {
     }
 
     // Atualizar ninja
-    public NinjaModel atualizarNinja(Long id, NinjaModel ninjaAtualizado) {
-        NinjaModel ninja = listarNinjaPorID(id);
-        if (ninjaRepository.existsById(id)) {
-            ninja.setNome(ninjaAtualizado.getNome());
-            ninja.setIdade(ninjaAtualizado.getIdade());
-            ninja.setEmail(ninjaAtualizado.getEmail());
-            ninja.setImgURL(ninjaAtualizado.getImgURL());
-            ninja.setRank(ninjaAtualizado.getRank());
-            return ninjaRepository.save(ninja);
-        }
+    public NinjaDTO atualizarNinja(Long id, NinjaModel ninjaAtualizado) {
+        Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
+    if (ninjaModel.isPresent()) {
+        NinjaModel ninjaModelAtualizado = ninjaMapper.map(ninjaMapper.map(ninjaAtualizado));
+        ninjaAtualizado.setId(id);
+        NinjaModel ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
+        return ninjaMapper.map(ninjaSalvo);
+    }
         return null;
     }
 
